@@ -81,4 +81,7 @@ dependencies {
 
     // Fragment-KTX
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+
+    // Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

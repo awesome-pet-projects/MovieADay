@@ -24,7 +24,7 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/dashboard"
+        android:id="@+id/upcoming"
         android:icon="@drawable/ic_upcoming"
         android:title="@string/upcoming_title"
         android:contentDescription="@string/description"

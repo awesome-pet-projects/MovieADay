@@ -8,7 +8,7 @@ import androidx.room.withTransaction
 import com.awesomepetprojects.movieaday.data.db.MovieADayDatabase
 import com.awesomepetprojects.movieaday.data.models.Movie
 import com.awesomepetprojects.movieaday.data.models.RemoteKey
-import com.awesomepetprojects.movieaday.data.models.converters.MoviesType
+import com.awesomepetprojects.movieaday.data.models.MoviesType
 import com.awesomepetprojects.movieaday.data.models.converters.toGenres
 import com.awesomepetprojects.movieaday.data.models.converters.toMovies
 import com.awesomepetprojects.movieaday.data.networking.apis.MoviesApi

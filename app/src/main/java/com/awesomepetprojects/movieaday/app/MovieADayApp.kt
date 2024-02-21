@@ -1,6 +1,7 @@
 package com.awesomepetprojects.movieaday.app
 
 import android.app.Application
+import com.awesomepetprojects.movieaday.data.di.datastoreModule
 import com.awesomepetprojects.movieaday.data.di.homeModule
 import com.awesomepetprojects.movieaday.data.di.retrofitModule
 import com.awesomepetprojects.movieaday.data.di.roomModule
@@ -20,6 +21,6 @@ class MovieADayApp : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(movieADayApp)
-            modules(homeModule, retrofitModule, roomModule)
+            modules(homeModule, retrofitModule, roomModule, datastoreModule)
         }
 }

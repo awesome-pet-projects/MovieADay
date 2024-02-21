@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.awesomepetprojects.movieaday.R
+import com.awesomepetprojects.movieaday.data.models.MoviesType
 import com.awesomepetprojects.movieaday.databinding.FragmentHomeBinding
 import com.awesomepetprojects.movieaday.ui.home.adapters.MovieLoadStateAdapter
 import com.awesomepetprojects.movieaday.ui.home.adapters.MoviesAdapter
@@ -42,7 +44,7 @@ class HomeFragment : Fragment() {
 
     private fun initObservers() {
         lifecycleScope.launch {
-            viewModel.getTopRatedMovies().collectLatest { data ->
+            viewModel.movies.collectLatest { data ->
                 moviesAdapter.submitData(data)
             }
         }
@@ -73,10 +75,44 @@ class HomeFragment : Fragment() {
     private fun setListeners() {
         binding.apply {
             refresh.setOnClickListener {
-                viewModel.refresh()
-                moviesAdapter.refresh()
+                refreshMovies()
+            }
+
+            bottomBar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.top_rated -> {
+                        viewModel.setMoviesType(MoviesType.TOP_RATED)
+                        refreshMovies()
+                        true
+                    }
+
+                    R.id.popular -> {
+                        viewModel.setMoviesType(MoviesType.POPULAR)
+                        refreshMovies()
+                        true
+                    }
+
+                    R.id.now_playing -> {
+                        viewModel.setMoviesType(MoviesType.NOW_PLAYING)
+                        refreshMovies()
+                        true
+                    }
+
+                    R.id.upcoming -> {
+                        viewModel.setMoviesType(MoviesType.UPCOMING)
+                        refreshMovies()
+                        true
+                    }
+
+                    else -> false
+                }
             }
         }
+    }
+
+    private fun refreshMovies() {
+        viewModel.refresh()
+        moviesAdapter.refresh()
     }
 
     override fun onDestroy() {
