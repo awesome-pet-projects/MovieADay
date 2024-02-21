@@ -8,6 +8,7 @@ import androidx.room.withTransaction
 import com.awesomepetprojects.movieaday.data.db.MovieADayDatabase
 import com.awesomepetprojects.movieaday.data.models.Movie
 import com.awesomepetprojects.movieaday.data.models.RemoteKey
+import com.awesomepetprojects.movieaday.data.models.converters.MoviesType
 import com.awesomepetprojects.movieaday.data.models.converters.toGenres
 import com.awesomepetprojects.movieaday.data.models.converters.toMovies
 import com.awesomepetprojects.movieaday.data.networking.apis.MoviesApi
@@ -15,7 +16,9 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 @OptIn(ExperimentalPagingApi::class)
-class MoviesMediator : RemoteMediator<Int, Movie>(), KoinComponent {
+class MoviesMediator(
+    private val moviesType: MoviesType
+) : RemoteMediator<Int, Movie>(), KoinComponent {
 
     private val moviesApi by inject<MoviesApi>()
 
@@ -40,7 +43,7 @@ class MoviesMediator : RemoteMediator<Int, Movie>(), KoinComponent {
             }
 
             makeGenresApiCall()
-            makeTopRatedMoviesApiCall(page)
+            makeMoviesApiCall(page)
 
             return MediatorResult.Success(false)
         } catch (e: Exception) {
@@ -48,10 +51,15 @@ class MoviesMediator : RemoteMediator<Int, Movie>(), KoinComponent {
         }
     }
 
-    private suspend fun makeTopRatedMoviesApiCall(
+    private suspend fun makeMoviesApiCall(
         page: Int,
     ) {
-        val response = moviesApi.getTopRatedMovies(page)
+        val response = when(moviesType) {
+            MoviesType.TOP_RATED -> moviesApi.getTopRatedMovies(page)
+            MoviesType.POPULAR -> moviesApi.getPopularMovies(page)
+            MoviesType.NOW_PLAYING -> moviesApi.getNowPlayingMovies(page)
+            MoviesType.UPCOMING -> moviesApi.getUpcomingMovies(page)
+        }
         val responseBody = response.body()
 
         if (response.isSuccessful && responseBody != null) {

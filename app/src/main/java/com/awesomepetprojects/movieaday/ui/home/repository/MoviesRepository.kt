@@ -3,8 +3,8 @@ package com.awesomepetprojects.movieaday.ui.home.repository
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.sqlite.db.SimpleSQLiteQuery
 import com.awesomepetprojects.movieaday.data.db.MovieADayDatabase
+import com.awesomepetprojects.movieaday.data.models.converters.MoviesType
 import com.awesomepetprojects.movieaday.data.networking.mediator.MoviesMediator
 import com.awesomepetprojects.movieaday.utils.PAGE_SIZE
 import org.koin.core.component.KoinComponent
@@ -16,16 +16,13 @@ class MoviesRepository : KoinComponent {
     private val moviesDao = movieADayDatabase.moviesDao()
     private val remoteKeysDao = movieADayDatabase.remoteKeysDao()
 
-    private val movieMediator = MoviesMediator()
-
     @OptIn(ExperimentalPagingApi::class)
-    fun getMoviesByQuery(query: SimpleSQLiteQuery) = Pager(
+    fun getAllMovies(moviesType: MoviesType) = Pager(
         config = PagingConfig(
             pageSize = PAGE_SIZE
-        ),
-        remoteMediator = movieMediator
+        ), remoteMediator = MoviesMediator(moviesType)
     ) {
-        moviesDao.getMoviesByQuery(query)
+        moviesDao.getAllMovies()
     }.flow
 
     suspend fun deleteAllKeys() = remoteKeysDao.deleteAllKeys()

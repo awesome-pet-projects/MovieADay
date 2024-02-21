@@ -3,7 +3,7 @@ package com.awesomepetprojects.movieaday.data.networking.dtos
 
 import com.google.gson.annotations.SerializedName
 
-data class TopRatedMoviesResponse(
+data class MoviesResponse(
     @SerializedName("results")
     val results: List<Result>,
 ) {
@@ -20,8 +20,6 @@ data class TopRatedMoviesResponse(
         val releaseDate: String,
         @SerializedName("title")
         val title: String,
-        @SerializedName("video")
-        val video: Boolean,
         @SerializedName("vote_average")
         val voteAverage: Double,
         @SerializedName("vote_count")

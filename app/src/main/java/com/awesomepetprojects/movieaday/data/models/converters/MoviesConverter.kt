@@ -1,10 +1,10 @@
 package com.awesomepetprojects.movieaday.data.models.converters
 
 import com.awesomepetprojects.movieaday.data.models.Movie
-import com.awesomepetprojects.movieaday.data.networking.dtos.TopRatedMoviesResponse
+import com.awesomepetprojects.movieaday.data.networking.dtos.MoviesResponse
 import com.awesomepetprojects.movieaday.utils.BASE_IMAGE_URL
 
-fun TopRatedMoviesResponse.Result.toMovie() =
+fun MoviesResponse.Result.toMovie() =
     Movie(
         null,
         this.id,
@@ -18,5 +18,5 @@ fun TopRatedMoviesResponse.Result.toMovie() =
         this.voteCount,
     )
 
-fun List<TopRatedMoviesResponse.Result>.toMovies() =
+fun List<MoviesResponse.Result>.toMovies() =
     this.map { result -> result.toMovie() }

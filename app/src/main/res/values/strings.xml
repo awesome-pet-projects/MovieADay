@@ -4,4 +4,8 @@
     <string name="load_state_retry_text">Retry</string>
     <string name="searchbar_hint">Search movies</string>
     <string name="description">Description</string>
+    <string name="top_rated_title">Top rated</string>
+    <string name="popular_title">Popular</string>
+    <string name="now_playing_title">Now playing</string>
+    <string name="upcoming_title">Upcoming</string>
 </resources>
