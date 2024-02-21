@@ -1,7 +1,8 @@
-package com.awesomepetprojects.movieaday
+package com.awesomepetprojects.movieaday.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.awesomepetprojects.movieaday.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
