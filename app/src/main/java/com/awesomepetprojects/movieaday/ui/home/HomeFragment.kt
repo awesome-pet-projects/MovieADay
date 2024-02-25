@@ -1,7 +1,6 @@
 package com.awesomepetprojects.movieaday.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import com.awesomepetprojects.movieaday.databinding.FragmentHomeBinding
 import com.awesomepetprojects.movieaday.ui.home.adapters.FilteredMoviesAdapter
 import com.awesomepetprojects.movieaday.ui.home.adapters.MovieLoadStateAdapter
 import com.awesomepetprojects.movieaday.ui.home.adapters.MoviesAdapter
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject

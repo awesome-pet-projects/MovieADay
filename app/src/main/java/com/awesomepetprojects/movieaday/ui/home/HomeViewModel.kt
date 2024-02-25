@@ -1,26 +1,15 @@
 package com.awesomepetprojects.movieaday.ui.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
-import androidx.paging.filter
-import androidx.paging.log
-import androidx.paging.map
-import androidx.room.Query
-import com.awesomepetprojects.movieaday.data.models.Movie
 import com.awesomepetprojects.movieaday.data.models.MoviesType
 import com.awesomepetprojects.movieaday.ui.home.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -57,7 +46,8 @@ class HomeViewModel(
 
     fun getMovies() = movies
 
-    private val filteredMovies = searchQuery.flatMapLatest { moviesRepository.getFilteredMovies(it) }
+    private val filteredMovies =
+        searchQuery.flatMapLatest { moviesRepository.getFilteredMovies(it) }
 
     fun getFilteredMovies() = filteredMovies
 
