@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.awesomepetprojects.movieaday.data.db.MovieADayDatabase
 import com.awesomepetprojects.movieaday.data.models.MoviesType
 import com.awesomepetprojects.movieaday.data.networking.mediator.MoviesMediator
@@ -46,4 +47,6 @@ class MoviesRepository : KoinComponent {
     suspend fun deleteAllKeys() = remoteKeysDao.deleteAllKeys()
 
     suspend fun deleteAllMovies() = moviesDao.deleteAllMovies()
+
+    fun getFilteredMovies(query: String) = moviesDao.getFilteredMovies(query)
 }

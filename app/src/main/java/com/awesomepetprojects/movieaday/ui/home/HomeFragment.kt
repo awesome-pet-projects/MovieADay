@@ -1,9 +1,11 @@
 package com.awesomepetprojects.movieaday.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -11,8 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.awesomepetprojects.movieaday.R
 import com.awesomepetprojects.movieaday.data.models.MoviesType
 import com.awesomepetprojects.movieaday.databinding.FragmentHomeBinding
+import com.awesomepetprojects.movieaday.ui.home.adapters.FilteredMoviesAdapter
 import com.awesomepetprojects.movieaday.ui.home.adapters.MovieLoadStateAdapter
 import com.awesomepetprojects.movieaday.ui.home.adapters.MoviesAdapter
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -25,6 +29,7 @@ class HomeFragment : Fragment() {
     private val viewModel by inject<HomeViewModel>()
 
     private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var searchedMoviesAdapter: FilteredMoviesAdapter
     private lateinit var movieLoadStateAdapter: MovieLoadStateAdapter
 
     override fun onCreateView(
@@ -44,8 +49,14 @@ class HomeFragment : Fragment() {
 
     private fun initObservers() {
         lifecycleScope.launch {
-            viewModel.movies.collectLatest { data ->
+            viewModel.getMovies().collectLatest { data ->
                 moviesAdapter.submitData(data)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.getFilteredMovies().collectLatest { movies ->
+                searchedMoviesAdapter.submitList(movies)
             }
         }
     }
@@ -63,6 +74,11 @@ class HomeFragment : Fragment() {
                     homeSwipeContainer.isEnabled = scrollY == 0
                 }
             }
+
+            recyclerSearchedMovies.apply {
+                adapter = searchedMoviesAdapter
+                layoutManager = LinearLayoutManager(activity)
+            }
         }
     }
 
@@ -70,6 +86,8 @@ class HomeFragment : Fragment() {
         moviesAdapter = MoviesAdapter { movie ->
 
         }
+        searchedMoviesAdapter = FilteredMoviesAdapter()
+
         movieLoadStateAdapter = MovieLoadStateAdapter {
             moviesAdapter.retry()
         }
@@ -110,6 +128,9 @@ class HomeFragment : Fragment() {
 
                     else -> false
                 }
+            }
+            searchView.editText.addTextChangedListener {
+                viewModel.searchQuery.value = it.toString()
             }
         }
     }

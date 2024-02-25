@@ -1,6 +1,5 @@
 package com.awesomepetprojects.movieaday.utils
 
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 
 // Movies

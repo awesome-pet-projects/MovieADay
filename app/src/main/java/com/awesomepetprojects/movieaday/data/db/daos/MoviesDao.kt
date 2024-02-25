@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.awesomepetprojects.movieaday.data.models.Movie
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MoviesDao {
@@ -18,4 +19,7 @@ interface MoviesDao {
 
     @Query("DELETE FROM movies")
     suspend fun deleteAllMovies()
+
+    @Query("SELECT * FROM movies WHERE title LIKE '%' || :query || '%'")
+    fun getFilteredMovies(query: String): Flow<List<Movie>>
 }
