@@ -59,6 +59,9 @@ class HomeFragment : Fragment() {
                     footer = movieLoadStateAdapter
                 )
                 layoutManager = LinearLayoutManager(activity)
+                setOnScrollChangeListener { _, _, scrollY, _, _ ->
+                    homeSwipeContainer.isEnabled = scrollY == 0
+                }
             }
         }
     }
@@ -74,8 +77,9 @@ class HomeFragment : Fragment() {
 
     private fun setListeners() {
         binding.apply {
-            refresh.setOnClickListener {
+            homeSwipeContainer.setOnRefreshListener {
                 refreshMovies()
+                homeSwipeContainer.isRefreshing = false
             }
 
             bottomBar.setOnMenuItemClickListener { menuItem ->

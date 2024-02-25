@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_movies"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/home_swipe_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:paddingTop="88dp"
-        android:paddingBottom="96dp"
         app:layout_behavior="@string/searchbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_movie"/>
+        tools:ignore="PrivateResource"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_movies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:paddingTop="88dp"
+            android:paddingBottom="96dp"
+            tools:listitem="@layout/item_movie" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -47,23 +54,11 @@
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_bar"
+        style="@style/Widget.Material3.BottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        style="@style/Widget.Material3.BottomAppBar"
-        app:navigationIcon="@drawable/ic_menu"
-        app:menu="@menu/menu_bottom_bar" />
-
-    <ImageView
-        android:id="@+id/refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        app:layout_anchorGravity="end|bottom"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="28dp"
-        android:contentDescription="@string/description"
-        android:src="@drawable/ic_refresh"
-        app:layout_anchor="@id/bottom_bar"/>
+        app:menu="@menu/menu_bottom_bar"
+        app:navigationIcon="@drawable/ic_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
